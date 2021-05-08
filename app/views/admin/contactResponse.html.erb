@@ -1,0 +1,52 @@
+<style>
+      .intro-contact {
+           overflow: hidden;
+           display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 3;
+       }  
+</style>
+
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container" style="margin-top: 30px;">
+                                        <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">YÊU CẦU HỖ TRỢ TƯ VẤN:</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Nội dung
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+
+                                <h3><%= Account.find(@contact.user).name %> | <%= @contact.name %></h3>
+                                <p><i>Gửi đến lúc: <%= @contact.date_send.strftime("%H:%M:%S %d-%m-%Y") %></i></p>
+                                <p>Email sẽ nhận phản hồi: <%= @contact.email %></p>
+                                <span><%== @contact.content %></span>
+                            </div><hr>
+                            <div class="table-responsive">
+                                <% if @contact.reply != '' %>
+                                    <h3>Nội dung phản hồi:</h3>
+                                    <span><%== @contact.reply %></span>
+                                <% else %>
+                                    <form action="/admin/reply/contact/<%= @contact.id %>" method="post">
+                                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                                        <div class="form-group">
+                                            <label for="reply"><b>NỘI DUNG PHẢN HỒI:</b></label>
+                                            <textarea name="reply"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('reply');
+                                            </script>
+                                        </div>
+                                        <button type="submit" class="btn btn-success" style="float: right;">PHẢN HỒI</button>
+                                    </form>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

@@ -1,0 +1,64 @@
+<div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid" style="margin-top: 30px;">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">DANH SÁCH BÀI VIẾT:</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách:</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th class="text-center">STT</th>
+                                          <th>Tiêu đề bài viết</th>
+                                          <th class='text-center'>Trạng thái</th>
+                                          <th class='text-center'>Kiểm soát</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% index = 1 %>
+                                        <% @posts.each do |post| %>
+                                            <tr>
+                                                <td class='text-center'><%= index %></td>
+                                                <% index += 1 %>
+                                                <td><b><a href='/admin/post/<%= post.id %>' style='text-decoration:none;'><%= post.title %></a></b></td>
+                                                <td class='text-center'>
+                                                    <% if post.checkpost == 0 %>
+                                                        Chưa duyệt
+                                                    <% else %>
+                                                        Đã duyệt
+                                                    <% end %>
+                                                </td>
+                                                <form action="/admin/post/active/<%= post.id %>" method='post'>
+                                                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                                                    <td class='text-center'>
+                                                        <label class="switch">
+                                                            <% if post.isShow == 0 %>
+                                                                <input type="checkbox" checked name="show"  onchange=this.form.submit()>
+                                                            <% else %>
+                                                                <input type="checkbox" name="show"  onchange=this.form.submit()>
+                                                            <% end %>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                </form>
+                                            </tr>
+                                        <% end %>
+                                      </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination" style="float: center;margin-left: 40%;">
+                                <%= will_paginate @posts %>    
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>

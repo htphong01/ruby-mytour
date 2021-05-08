@@ -1,0 +1,86 @@
+<div class="row">
+        <h3>Cập nhật thông tin doanh nghiệp</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-lg-10">
+                <div class="text-danger">
+                    <%= session[:notification] %>
+                    <% session[:notification] = '' %>
+                </div>
+                <form action="/admin/hotel/update/<%= @hotel.id %>" method="post" enctype="multipart/form-data">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <div class="form-group">
+                        <label for="name">Tên doanh nghiệp: </label>
+                        <input type="text" name="name" id="" class="form-control" value="<%= @hotel.name %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Hình ảnh: </label>
+                        <input type="file" name="image" id="" onchange="readURL(this)" class="form-control"><br>
+                        <img class="image-hotel" src="/<%= @hotel.image %>" style="height: 200px;padding: 20px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ:</label>
+                        <input type="text" name="address" id="" class="form-control" value="<%= @hotel.address %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Khu vực:</label>
+                        <select name="idaddress" id="" class="form-control">
+                            <% @addresses.each do |address| %>
+                                <% if address.id == @hotel.id_address %>
+                                    <option value="<%= address.id %>" selected> <%== address.name %></option>
+                                <% else %>
+                                    <option value="<%= address.id %>"> <%== address.name %></option>
+                                <% end %>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idcategory">Thuộc danh mục:</label>
+                        <select name="cate" id="" class="form-control">
+                            <% @categories.each do |category| %>
+                                <% if category.id == @hotel.cate %>
+                                    <option value="<%= category.id %>" selected><%== category.namecate %></option>
+                                <% else %>
+                                    <option value="<%= category.id %>"><%== category.namecate %></option>
+                                <% end %>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Admin quản lý:</label>
+                        <select name="admin" id="" class="form-control">
+                            <% @accounts.each do |account| %>
+                                <% if @hotel.admin_hotel.to_i == 0 %>
+                                    <option value="0" selected>--- --- ---</option>
+                                <% elsif account.id == @hotel.admin_hotel %>
+                                    <option value="<%= account.id %>" selected><%= account.username %></option>
+                                <% else %>
+                                    <option value="<%= account.id %>"><%= account.username %></option>
+                                <% end %>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Mô tả</label>
+                        <textarea name="desc"><%== @hotel.description %></textarea>
+                        <script>
+                            CKEDITOR.replace('desc');
+                        </script>
+                    </div>
+                    <input type="submit" class="btn btn-primary" name="submit" value ="Chỉnh sửa">
+                </form>
+            </div>
+        </div>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.image-hotel').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>

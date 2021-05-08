@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/Css/detailhotel.css">
+    <link rel="stylesheet" href="/Css/list_rooms.css">
+    <title>MyTour.vn</title>
+    <style>
+    h2 {
+        font-size: 1.5rem
+    }
+    </style>
+</head>
+<body>
+       <div  class="container-fuild" style="width: 100%;left: 0;right: 0;top:0">
+            <img src='<%= @hotel.image %>'style='width: 100%; height: 650px;' class='detailroom-main-img'>
+            <div class='carousel-caption detailroom-caption-edit'>
+                <h1 style='font-size:60px;margin-bottom:150px;padding:40px;background: rgba(0,174,239,0.6);' class='titleroom'><b><%= @hotel.name %></b></h1>
+            </div>
+        </div>
+        <div class="container-fuild" style="background-color: #f5f5f5;padding-bottom:40px;padding-top: 10px;">
+            <div class="container">
+                <h2 style="padding-top: 20px;padding-bottom: 20px;"><i class="fas fa-images"></i><b> HÌNH ẢNH</b></h2>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <% @images.each_with_index do |image, index| %>
+                            <div class='mySlides'>
+                                <div class='numbertext'><%= index + 1%>/<%= @images.size %></div>
+                                <img src='<%= image.image %>' style='width:100%;height:360px;' class='detailroom-main-img'>
+                            </div>
+                        <% end %>
+                            
+                          <a class="prev" style="text-decoration: none;" onclick="plusSlides(-1)">❮</a>
+                          <a class="next" style="text-decoration: none;" onclick="plusSlides(1)">❯</a>
+
+                    </div> 
+                    <div class="col-md-6 col-xs-6">
+                        <div class="row detailroom-mini-img">
+                            <% @images.each_with_index do |image, index| %>
+                                <div class='column'>
+                                    <img class='demo cursor' src='/<%= image.image %>' style='width:100%;height:120px;' onclick='currentSlide(<%= index + 1 %>)' >
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="container">
+            <h2 style="padding-top: 20px;padding-bottom: 20px;"><b>GIỚI THIỆU</b></h2><hr>
+            <p style='color:blue;'><b><i class='fas fa-map-marker-alt'></i><%= @hotel.address %></b></p>
+                <p><b><i class='fas fa-tags'></i><%= raw(@cate.namecate) %></b></p>
+                <span class='intro-hotel'><%= raw(@hotel.description) %></span>
+                <p style='float:right;'><a href=''>Xem thêm</a></p>
+          </div>
+          <div class="container" style="padding-top: 70px;">
+            <h2><b>PHÒNG ĐƯỢC QUAN TÂM NHIỀU NHẤT</b></h2><hr>
+            <div class="row">
+                <% @rooms.each do |room| %>
+                    <div class="col-md-4 content3-item">
+                        <a href="/rooms?id=<%= room.id %>" class="content3-item_link">
+                            <img src="<%= room.image %>" alt="" class="content3-img">
+                            <div class="content3-details">
+                                <div class="content3-title"><%= room.nameroom %></div>
+                                <div class="content3-last-time">1 đêm</div>
+                                <div class="content3-price"><%= room.final_price %> </div>
+                                <div class="content3-last-time">Tình trạng: 
+                                    <% if (room.status <=> '0') == 0 %>
+                                        Hết phòng
+                                    <% else %>
+                                        Còn phòng
+                                    <% end %>
+                                </div>
+                                <div class="content3-destination">
+                                    Tối đa: <i class='fas fa-user-alt'></i> X <%= room.maximun %> - 
+                                    <i class='fas fa-tag'></i> Phòng: <%= room.name %>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% end %>
+            </div>
+          </div>
+          <div class="container">
+            <h2><b>DANH SÁCH PHÒNG CỦA KHÁCH SẠN</b></h2><hr>
+              <div class="row properties">
+                <div class="col-md-3"><b>LOẠI PHÒNG</b></div>
+                <div class="col-md-1"><b>TỐI ĐA</b></div>
+                <div class="col-md-3"><b>ĐẶC ĐIỂM</b></div>
+                <div class="col-md-2"><b>GIÁ MỘT ĐÊM</b></div>
+                <div class="col-md-1"><b>SỐ LƯỢNG</b></div>
+                <div class="col-md-2"><b>ĐẶT PHÒNG</b></div>
+            </div>
+                <% @rooms.each do |room| %>
+                    <div class='row card_room nameroom'><h5><b><%= room.nameroom %></b></h5></div>
+                    <div class='row card_room'>
+                        <div class='col-md-3 strip'>
+                            <img src='<%= room.image %>' class='image_room'><br>
+                                <p style='margin-top:15px;'><i class='fas fa-tag'></i> Phòng: <%= room.name %></p>
+                        </div>
+                        <div class='col-md-1 strip'>
+                            <i class='fas fa-user-alt'></i> X <%= room.maximun %>
+                        </div>
+                        <div class='col-md-3 strip' style='text-align:left;'>
+                            <p><i class='fas fa-expand-alt'></i> <%= room.area %> m<sup>2</sup></p>
+                            <p><i class='far fa-eye'></i> <%= room.direction %> </p>
+                            <p><i class='fas fa-bed'></i> <%= room.beds %> </p>
+                            <p><i class='fas fa-concierge-bell'></i>
+                                <% if (room.breakfast <=> '0') == 0 %>
+                                    Không bao gồm bữa sáng
+                                <% else %>
+                                    Bao gồm bữa sáng
+                                <% end %>
+                            </p>
+                            <p><i class='fas fa-times'></i> 
+                                <% if (room.policy <=> '0') == 0 %>
+                                    Không hoàn hủy
+                                <% else %>
+                                    Có hoàn hủy
+                                <% end %>
+                            </p>
+                            <a href="/rooms?id=<%= room.id %>" class='btn-more'>Xem chi tiết</a>
+                        </div>
+                        <div class='col-md-2 strip'>
+                            <p><del><%= room.price %> đ</del></p>
+                            <h5 style='color:green;'><b><%= room.final_price %> đ</b></h5>
+                        </div>
+                        <div class='col-md-1 strip'>
+                            <input type='number' min='0' max='<%= room.status %>' value='0'>
+                        </div>
+                        <div class='col-md-2' style='padding-top:20px;'>
+                            <a href='/booking/<%= room.id %>' class='btn btn-primary'>ĐẶT NGAY</a>
+                        </div>
+                    </div>
+                <% end %>
+          </div>
+          <div class="container" style="padding: 30px;background-color: white; margin-top: 20px;" id="hotelRate">
+              <h2><b>ĐÁNH GIÁ DỊCH VỤ KHÁCH SẠN CỦA NGƯỜI DÙNG</b></h2><hr>
+                <% @rates.each do |rate| %>
+                    <div class="row" style="padding: 30px;">
+                        <div class="col-md-2">
+                            <% @users.each do |user| %>
+                                <% if user.id == rate.user %>
+                                    <% if (user.image <=> '') == 0 %>
+                                        <img src='image/avat.jpg' style='width:70%;border-radius:50%;'>
+                                    <% else %>
+                                        <img src='<%= user.image %>' style='width:70%;border-radius:50%;'>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        </div>
+                      <div class="col-md-9">
+                        <h4><b><%= rate.showname %></b></h4>
+                        <% case rate.rating %>
+                        <% when 1 %>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                        <% when 2 %>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                        <% when 3 %>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                        <% when 4 %>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='far fa-star' style='color:orange;'></i>
+                        <% when 5 %>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                            <i class='fas fa-star' style='color:orange;'></i>
+                        <% end %>
+                        <p><%= rate.comment %></p>
+                        </div>
+                    </div><hr>
+                <% end %>
+                
+                </div>              
+          </div>
+        </div>
+     <script type="text/javascript" src="/JS/detailroom.js"></script>
+</body>
+</html>

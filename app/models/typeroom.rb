@@ -1,0 +1,2 @@
+class Typeroom < ApplicationRecord
+end

@@ -1,0 +1,57 @@
+<div class="container-fuild ctnf_acc">
+		<div class="container ctn_acc cont">
+			<h1 class="text-center"><b>Hồ sơ cá nhân</b></h1>
+			<h3 class="text-center">Xin chào Admin,</h3>
+			
+			<form action="/admin/profile/update" method="post" enctype="multipart/form-data">
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+				<div class="row">
+					<div class="col-md-5 col-xs-5 text-center">
+							<img class="image-avatar" src="/<%= @user.image %>" style="width: 300px;height: 300px;border-radius: 50%;"><br>
+							<h5>Cập nhật Avatar</h5>
+							<input type="file" name="image" id="image" onchange="readURL(this);" style="display: none;" accept="image/*">
+							<label for="image" id="camera" style="margin-top: 4px; font-size: 40px; cursor: pointer;">
+                                    <i class="fas fa-camera"></i>
+                            </label>
+					</div>
+                    <script>
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('.image-avatar').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+	            <div class="col-md-6 col-xs-6 account" >
+	                	<div class="form-group">
+	                        <label for="username">Họ tên:</label>
+	                        <input type="text" name="name" id="" class="form-control" value="<%= @user.name %>">
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="password">Mật khẩu:********</label><br>
+	                        <a href="#" style="text-decoration:none; ">Đổi mật khẩu <i class="fas fa-arrow-circle-right"></i></a>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="email">Email:</label>
+	                        <input type="email" name="email" class="form-control" value="<%= @user.email %>">
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="phone">Điện thoại:</label>
+	                        <input type="text" name="phone" class="form-control" value="<%= @user.phone %>">
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="address">Địa chỉ:</label>
+	                        <textarea cols="30" rows="4" class="form-control" name="address"><%= @user.address %></textarea>
+	                    </div>
+	                    <button type="submit" class="btn btn-primary" style="float: right;">Cập nhật</button>
+	                    <label for="username" class="text-danger"></label>
+	            	</div>
+	            </div>
+	        </form>
+		</div>
+	</div>

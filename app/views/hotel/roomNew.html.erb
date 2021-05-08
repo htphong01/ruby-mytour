@@ -1,0 +1,91 @@
+<div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Thêm phòng mới:</h1>
+                    <hr class="sidebar-divider d-none d-md-block">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10">
+                            <!-- form -->
+                            <div class="text-danger">
+                                <%= session[:notification] %>
+                                <% session[:notification] = '' %>
+                            </div>
+                            <form action="/hotel/room/store" 
+                                method="post" enctype="multipart/form-data">
+                                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                                <div class="form-group">
+                                    <label for="name">Tên phòng: </label>
+                                    <input type="text" name="name" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Hình ảnh: </label>
+                                    <input type="file" name="image" id="" onchange="readURL(this)" class="form-control"><br>
+                                    <img class="image-hotel" src="/image/images.jpg" style="height: 300px;padding: 20px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng:</label>
+                                    <input type="number" name="amount" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Giá gốc: (Đơn vị tính: vnđ)</label>
+                                    <input type="number" name="price" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Khuyến mãi: (% được giảm hoặc số tiền giảm)</label>
+                                    <input type="number" name="discount" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Diện tích phòng:</label>
+                                    <input type="number" name="area" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Hướng phòng:</label>
+                                    <input type="text" name="direction" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng giường:</label>
+                                    <input type="text" name="beds" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng người tối đa:</label>
+                                    <input type="number" name="maxium" id="" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Chính sách hủy:</label>
+                                    <select name="policy" id="" class="form-control">
+                                        <option value="0" selected>Không hoàn hủy</option>
+                                        <option value="1">Hoàn hủy</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Dịch vụ ăn sáng:</label>
+                                    <select name="breakfast" id="" class="form-control">
+                                        <option value="0" selected>Không kèm bữa sáng</option>
+                                        <option value="1">Có bữa sáng</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Loại phòng:</label>
+                                    <select name="type" id="" class="form-control">
+                                        <option value="1" selected>VIP</option>
+                                        <option value="2">Thường</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="desc">Mô tả</label>
+                                    <textarea name="desc"></textarea>
+                                    <script>
+                                        CKEDITOR.replace('desc');
+                                    </script>
+                                </div>
+                                <input type="submit" class="btn btn-primary" name="submit" value ="Thêm mới">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

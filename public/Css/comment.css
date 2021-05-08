@@ -1,0 +1,155 @@
+
+.article-comments-block {
+    margin-top: 20px;
+}
+
+.article-your-comments-block {
+    padding: 16px;
+    background: rgba(34,34,34,.05);
+}
+
+.article-your-comments-area {
+    width: 100%;
+    resize: vertical;
+    outline: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.19);
+    border: solid 1px #c89490;
+    color: #727b88;
+}
+
+.article-your-comments-area:focus {
+    border: 1.5px solid #000;
+    border-radius: 5px;
+}
+
+.btn-your-comment {
+    background-color:#017657;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.user-comments-count {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.user-comments {
+    display: flex;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.user-comments-ava {
+    text-align: center;
+    width: 10%
+}
+
+.user-comments-img {
+    width: 100% ;
+    border-radius: 50%;
+}
+
+.user-comments-details {
+    width: 90%;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+.user-comments-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.user-comment-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00B9F2;
+}
+
+.user-comment-content {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.user-comment-time {
+    font-size: 14px;
+    color: gray;
+}
+
+.user-comment-action {
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.user-comment-reply {
+    margin-left: 16px;
+}
+
+.user-comment-action-more-block {
+    margin-left: 12px;
+    position: relative;
+}
+
+.user-comment-action-more {
+    position: absolute;
+    top: 110%;
+    right: -20%;
+    width: 150px;
+    background: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    display: none;
+}
+
+.user-comment-more-icon {
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.user-comment-more-icon:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.user-comment-edit {
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.user-comment-edit::selection {
+    background-color: #fff;
+}
+
+.user-comment-edit:hover {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.user-comment-delete {
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.user-comment-delete::selection {
+    background-color: #fff;
+}
+
+.user-comment-delete:hover {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.user-comment-report a{
+    color: #000;
+}
+
+.user-comment-report a:hover {
+    color: #000;
+    text-decoration: none;
+}

@@ -1,0 +1,51 @@
+.thumbnail{
+	border: none;
+}
+.thumbnail:hover {
+    box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+}
+.avat{
+	margin-top: 30px;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	border: none;
+	padding: 20px;
+}
+.avat:hover{
+	transition: all 0.5s ease-in-out;
+	transform: scale(1, 1);
+}
+
+.parallax {
+  /* The image used */
+  background-image: url("../image/welcome-to-danang.jpg");
+
+  /* Set a specific height */
+  min-height: 400px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  right: 0;
+  left: 0;
+}
+
+.us
+{
+	background: #363635;
+    content: '';
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    height: 400px;
+    right: 0;
+    left: 0;
+    opacity: 0.6;
+}
+
+.about-features {
+	align-items: center;
+}

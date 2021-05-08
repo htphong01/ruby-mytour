@@ -1,0 +1,31 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container" style="margin-top: 30px;">
+                                        <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">BẢN XEM TRƯỚC:</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Bài viết:
+                                <% if @post.checkpost == 0 %>
+                                    <a href='/admin/post/<%= @post.id %>/check' class='btn btn-success' style='float:right;'>Duyệt</a>
+                                <% else %>
+                                    <a href='/admin/post/<%= @post.id %>/check' class='btn btn-success disabled' style='float:right;'>Đã duyệt</a>
+                                <% end %>                            
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h1><b><%== @post.title %></b></h1>
+                                <p style="color: gray"><span class="far fa-clock"></span> Đăng tải <%== @post.datepost.strftime("%H:%M:%S %d-%m-%Y") %> | <span class="fas fa-user" style="padding:0  10px 0 10px ;"></span> Bởi: <%= Account.find(@post.user).name %></p>
+                                <div style="text-align: center;"><img src="/<%= @post.image %>" style="width: 80%;padding-bottom: 30px;"></div><hr>
+                                <span><%== @post.content %></span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href='/admin/post/<%= @post.id %>/check' class='btn btn-success disabled' style='float:right;'>Đã duyệt</a>                
+                </div>
+                <!-- /.container-fluid -->
+
+</div>

@@ -1,0 +1,2 @@
+class Imagesroom < ApplicationRecord
+end

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../Css/cart.css">
+    <title>Giỏ hàng</title>
+    <style>
+      .rate {
+      float: left;
+      height: 46px;
+      padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+    }
+    .rate:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+    }
+    .rate:not(:checked) > label:before {
+        content: '★ ';
+    }
+    .rate > input:checked ~ label {
+        color: #ffc700;    
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;  
+    }
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+    }
+    </style>
+</head>
+<body>
+ 
+
+  <div class="container-fuild" style="background-color: #f5f5f5;padding-bottom:40px;">
+  <div class="container">
+    <h1 style="padding-top: 200px;text-align: center;">Đơn hàng của tôi</h1>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Phòng đã đặt</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Tên phòng</th>
+                      <th>Giá phòng (đ/đêm)</th>
+                      <th>Số lượng</th>
+                      <th>Tổng tiền</th>
+                      <th>Phương thức thanh toán</th>
+                      <th>Chưa thanh toán</th>
+                      <th>Nhận phòng</th>
+                      <th>Trả phòng</th>
+                      <th>Trạng thái</th>  
+                      <th>Hủy/Đánh giá</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @bills.each do |bill| %>
+                      <tr>
+                        <% room = Room.find(bill.room) %>
+                        <td><%= room.nameroom %></td>
+                        <td><%= room.final_price %></td>
+                        <td><%= bill.amount %></td>
+                        <td><%= bill.sum_price %></td>
+                        <td><%= bill.pay %></td>
+                        <td>
+                          <% if bill.status == 1 || bill.status == 2 %>
+                            <%= bill.sum_price - bill.sum_price*30/100 %>
+                          <% else %>
+                              Đã thanh toán hết
+                          <% end %>
+                        </td>
+                        <td><%= Time.at(bill.checkin_date).strftime("%H:%M %d/%m/%y") %></td>
+                        <td><%= Time.at(bill.checkout_date).strftime("%H:%M %d/%m/%y") %></td>
+                        <td><%= Status.find(bill.status).name %></td>
+                        <td>
+                          <% @dayBetween = (bill.checkin_date.to_i - DateTime.now.to_i ) %>
+                          <% if bill.status.to_i == 4 && (bill.showname.to_s == '') %>
+                            <a><button type='button' class='btn btn-success rate-btn' data-toggle='modal' data-target='#exampleModal' 
+                                data-id='<%= bill.id %>'>Đánh giá</button>
+                            </a>
+                          <% end %>
+                          <% if bill.status.to_i < 4 && @dayBetween >= 7 %>
+                            <a href='/order/cancel/<%= bill.id %>'><button type='button' class='btn btn-danger'>Hủy đơn</button></a>
+                          <% end %>
+                          <% if bill.status.to_i == 4 && (bill.showname.to_s != '')%>
+                          <a href='/hotels?id=<%= bill.hotel %>' target="_blank"><button type='button' class='btn btn-primary'>Xem đánh giá</button>
+                            </a>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Đánh giá dịch vụ</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" class="send-rate" method="POST">
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <div class="form-group">
+                  <label for="username">Tên hiển thị: </label>
+                  <input id="username" name="username" type="text" class="form-control" value="<%= session[:user]['username'] %>" required >
+                </div>
+                <div class="form-group">
+                  <div class="rate" style="">
+                    <input type="radio" id="star5" name="rate" value="5">
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4">
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3">
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2">
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1">
+                    <label for="star1" title="text">1 star</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <textarea name="content" cols="10" rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" class="btn btn-success" value="Gửi đánh giá">
+                </div>
+                
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function () {
+        $('.rate-btn').on('click', function() {
+          var billID = $(this).attr('data-id');
+          console.log(billID);
+          $('.send-rate').attr('action', `/rate?id=${billID}`);
+        })
+      })
+    </script>
+     
+</body>
+</html>

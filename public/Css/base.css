@@ -1,0 +1,40 @@
+.fqa-row{
+    display: flex;
+}
+.fqa-col{
+   flex: 1;
+}
+.fqa-start-x{
+    justify-content: flex-start;
+}
+.fqa-center-x{
+    justify-content: center;
+}
+.fqa-end-x{
+    justify-content: flex-end;
+}
+.fqa-center-y{
+    align-items: center;
+}
+.fqa{
+    display: flex;
+    flex-wrap: wrap;
+}
+.fqa-grow{
+    flex-grow: 0;
+}
+.fqa-basis-auto{
+    flex-basis: auto;
+}
+.znColumnElement-innerWrapper.znColumnElement-innerContent{
+    align-self: center;
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.5rem !important;
+}
+
+h3 {
+    font-size: 1.17rem !important;
+}

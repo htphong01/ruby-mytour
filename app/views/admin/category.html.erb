@@ -1,0 +1,33 @@
+        <div class="row"  style="margin-left: 8px;margin-top: 20px;">
+            <h1 class="text-center">Danh mục</h1><br>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td class="text-center" scope="col">ID</td>
+                                <td class="text-center" scope="col">Tên</td>
+                                <td>Mô tả</td>
+                                <td class="text-center" scope="col">Chỉnh sửa</td>
+                                <td class="text-center" scope="col">Xóa</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @categories.each do |category| %>
+                                <tr>
+                                    <td class="text-center" scope="row"><%= category.id %></td>
+                                    <td class="text-center"><%== category.namecate %></td>
+                                    <td><%== category.description %></td>
+                                    <td class="text-center"><a href="/admin/category/edit/<%= category.id %>" name="modify" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                                    <td class="text-center"><a href="" name="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+                                </tr> 
+                            <% end %>   
+                        </tbody>
+                    </table>
+                <div class="pagination" style="float: center;margin-left: 40%;">
+                    <%= will_paginate @categories %>
+                </div>
+            </div>
+        </div>

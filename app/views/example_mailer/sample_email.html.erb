@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+        <h2><b>Đơn đặt phòng</b></h2>
+				<p>Xin chào <b><%= @bill.name %></b>,</p>
+				<p>Đơn hàng của quý khách đã được ghi nhận. Chúng tôi sẽ xác nhận trong thời gian sớm nhất.</p>
+				<h3><b>Thông tin đơn hàng:</b></h3>
+				<ul>
+					<li>Người nhận phòng: <b><%= @bill.name %></b></li>
+					<li>Phòng đã đặt: <b><%= @room.nameroom %></b></li>
+					<li>Thuộc khách sạn: <b><%= @hotel.name %> (<%= @hotel.address %>)</b></li>
+					<li>Số lượng: <b><%= @bill.amount %></b></li>
+					<li>Ngày nhận phòng: <b>14:00:00 <%= @bill.checkin_date.strftime("%d/%m/%Y") %></b></li>
+					<li>Ngày trả phòng: <b>11:00:00 <%= @bill.checkout_date.strftime("%d/%m/%Y") %></b></li>
+					<li>Thanh toán: <b><%= @bill.sum_price %> đ</b></li>
+				</ul>
+				<p>Sau khi xác nhận, quý khách vui lòng đến đúng thời gian (14:00:00 <%= @bill.checkout_date.strftime("%d/%m/%Y") %>) như đã xác nhận trước đó.</p>
+				<p>Trong trường hợp muốn hủy đơn, quý khách vui lòng tiến hàng trước thời gian nhận phòng 7 ngày. Sau thời gian trên, yêu cầu sẽ không được chấp nhận.</p>
+				<i>Xin chân thành cảm ơn quý khách đã tin tưởng lựa chọn dịch vụ tại MyTour.vn!</i>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+
+<style>
+      .intro-blog {
+           overflow-y: hidden;
+           display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 3;
+         font-size: 13px;
+       } 
+       .intro-title {
+           overflow-y: hidden;
+           display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 2;
+       }   
+    </style>
+<div>
+<div class="container-fuild"><!--Chạy Slide ảnh-->
+            <div style="width: 100%;">
+                <div class="container-fuild" style="width: 100%;left: 0;right: 0">
+                  <div id="myCarousel" class="carousel slide" data-ride="carousel">       
+                    <div class="carousel-inner" role="listbox">
+                      <div class="item active">
+                        <img src="/image/anh-bien-beach-9.jpg" style="width: 100%; height: 650px;" class="contact-img">
+                        <div class='carousel-caption contact-caption-edit' style="margin-bottom: -10px;">
+                          <h1 style='font-size:60px;color: white;' class="contact-title"><b>CẨM NANG DU LỊCH</b></h1></div>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-bottom: 100px;margin-top: 30px;">
+        	<div class="row">
+        		<div class="col-md-8">
+        			<% if session[:user] %>
+                        <p>Bạn đang hoạt động với tư cách:</p>
+                        <img style="width: 50px;height: 50px;border-radius: 50%;margin-right:7px;border:2px solid white;" src="<%= session[:user]['image'] %>">
+                        <b><%= session[:user]['name'] %></b>
+                        <span>
+                            <a href="/blog/new" class="btn btn-success" style="float:right;">Đăng bài viết</a>
+                        </span>
+                    <% end %>
+                    <hr>
+    		        <div>
+                        <% @blogs.each do |blog| %>
+                            <div class="row" style="padding-top: 30px;padding-bottom: 20px;">
+                                <div class="col-md-5">
+                                    <a href='/blog/<%= blog.id %>' style='text-decoration:none;'><img src='<%= blog.image %>' style='width:100%;'></a>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5><a href='/blog/<%= blog.id %>' style='text-decoration:none;'><b><%= blog.title %></b></a></h5>
+                                    <p style="color: gray">
+                                    <span class="far fa-clock"></span> <%= Time.at(blog.datepost).strftime("%I:%M %d/%m/%Y") %> |<span class="fas fa-user" style="padding:0  10px 0 10px ;"></span>
+                                        <% @users.each do |user| %>
+                                            <% if user.id == blog.user %>
+                                                <%= user.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </p><hr>
+                                    <div class='intro-blog'>
+                                    <%== (blog.content) %> 
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                    <div class="pagination" style="float: center;margin-left: 40%;">
+                        <%= will_paginate @blogs %>
+                    </div>
+        		</div>
+        		<div class="col-md-4">
+        			<div style="padding-top: 30px; background: rgba(43, 124, 169, 0.3);border-radius: 5px;padding: 10px;">
+                        <h4><b>PHỔ BIẾN</b></h4>
+                        <% @populars.each do |popular| %>
+                            <div class='row' style='padding-top:30px;'>
+                                <div class='col-md-4'>
+                                    <a href='/blog/<%= popular.id %>' style='text-decoration:none;color:black'><img src='<%= popular.image %>' style='width:122%;'></a>
+                                </div>
+                                <div class='col-md-8'>
+                                    <a href='/blog/<%= popular.id %>' style='text-decoration:none;color:black'><h6 class='intro-title'><b><%= popular.title %></b></h6></a>
+                                    <p style='color:gray;font-size:13px;'><span class='fas fa-user'></span>
+                                        <% @users.each do |user| %>
+                                            <% if user.id == popular.user %>
+                                                <%= user.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                        <div style="padding-top: 30px; background: rgba(43, 124, 169, 0.3);border-radius: 5px;padding: 10px;margin-top: 60px; ">
+                        <h4><b>GẦN ĐÂY</b></h4>
+                        <% @recents.each do |recent| %>
+                            <div class='row' style='padding-top:30px;'>
+                                <div class='col-md-4'>
+                                    <a href='/blog/<%= recent.id %>' style='text-decoration:none;color:black'><img src='<%= recent.image %>' style='width:122%;'></a>
+                                </div>
+                                <div class='col-md-8'>
+                                    <a href='/blog/<%= recent.id %>' style='text-decoration:none;color:black'><h6 class='intro-title'><b><%= recent.title %></b></h6></a>
+                                    <p style='color:gray;font-size:13px;'><span class='fas fa-user'></span>
+                                        <% @users.each do |user| %>
+                                            <% if user.id == recent.user %>
+                                                <%= user.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+        		</div>
+        	</div>
+        </div>
+</div>

@@ -1,0 +1,130 @@
+.menu{
+	background-color:white;
+	height: 100px; 
+	border-bottom: 1px solid #ddd;
+}
+
+.select{
+	background-color: white;
+	font-size: 22px;
+	font-family: 'Nunito', sans-serif;
+}
+
+.mobile-navbar {
+	display: none;
+	overflow :hidden;
+}
+
+.header-navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 180px;
+	background: rgba(43, 124, 169, 0.7);
+	color: white;
+	transition: all 0.4s ease;
+	z-index: 100000;
+}
+
+.header-with-logo {
+	height: 130px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 12px;
+	line-height: 40px;
+	max-width: 1200px;
+}
+
+.header-logo-contact {
+	display: flex;
+	flex: 1;
+}
+
+.header-logo-social {
+	flex: 1;
+	
+}
+
+.header-logo-children {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-logo-link {
+	display: block;
+	color: white;
+	padding: 0 8px;
+	margin: 0 4px;
+	font-weight: 550;
+}
+
+.header-logo-link i {
+	font-size: 16px;
+}
+
+.header-logo-link:hover {
+	text-decoration: none;
+	color: black;
+	background: white;
+}
+
+.header-logo-item:nth-child(2) {
+	margin-left: 20px;
+}
+
+.header-logo-item i {
+	margin-right: 4px;
+}
+
+.header-logo-wrap img {
+	width: 100%;
+}
+
+.header-navbar-list {
+	list-style: none;
+	padding-left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(6, 6, 6, 0.33);
+	height: 50px;
+}
+
+.header-navbar__link {
+	color: white;
+	display: block;
+	padding: 15px 25px;
+	background: transparent;
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.header-navbar__link:hover {
+	text-decoration: none;
+	color: yellow;
+}
+
+.header-navbar--scroll {
+	height: 110px;
+	background: #080303 !important;
+	transition: all 0.4s ease;
+}
+
+.header-navbar--scroll .header-with-logo {
+	height: 60px;
+	justify-content: center;
+}
+
+.header-navbar-homepage {
+	background: transparent;
+}
+
+.header-navbar--scroll .header-logo-contact,
+.header-navbar--scroll .header-logo-social {
+	display: none;
+}

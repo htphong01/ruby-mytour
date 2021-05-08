@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/Css/index.css">
+    <link rel="stylesheet" href="/Css/contact.css">
+    
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+	<title>MyTour.vn - <%= @post.title %></title>
+</head>
+<style>
+        .intro-blog {
+            overflow-y: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            font-size: 13px;
+        } 
+        .intro-title {
+            overflow-y: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }  
+
+       .btn-heart.fas {
+            color: red !important;
+        }
+    </style>
+<div>
+    <div class="container-fuild"><!--Chạy Slide ảnh-->
+            <div style="width: 100%;">
+                <div class="container-fuild" style="width: 100%;left: 0;right: 0">
+                  <div id="myCarousel" class="carousel slide" data-ride="carousel">       
+                    <div class="carousel-inner" role="listbox">
+                      <div class="item active">
+                        <img src="/image/anh-bien-beach-9.jpg" style="width: 100%; height: 650px;" class="contact-img">
+                        <div class='carousel-caption contact-caption-edit' style="margin-bottom: -10px;">
+                          <h1 style='font-size:60px;color: white;' class="contact-title"><b>CẨM NANG DU LỊCH</b></h1></div>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-bottom: 100px;margin-top: 30px;">
+        	<div class="row">
+        		<div class="col-md-8 col-xs-12" style="font-family:Nunito">
+    		        <div>
+                        <h2><b><%= @post.title %></b></h2>
+                        <p style="color: gray"><span class="far fa-clock"></span> Đăng tải <%= Time.at(@post.datepost).strftime("%I:%M %p %d/%m/%Y") %> |<span class="fas fa-user" style="padding:0  10px 0 10px ;"></span>
+                        <% @users.each do |user| %>
+                            <% if user.id == @post.user %>
+                                <%= user.name %>
+                            <% end %>
+                        <% end %>
+                        <span style='float:right;'><i class='far fa-eye'></i> <%= @post.view %> lượt xem</span></p>
+                        <div style="text-align: center;"><img src="/<%= @post.image %>" style="width: 80%;padding-bottom: 30px;"></div><hr>
+                        <span><%== (@post.content) %></span><hr>
+                    </div>
+                    <div class="article-comments-block">
+                        <form class="article-your-comments-block" action="" method="POST">
+                            <div>
+                                <div class="row" style="margin-bottom: 40px">
+                                    <div class="col-md-2">
+                                        <% if session[:user] && (session[:user]['image'] != '') %>
+                                            <img style="width: 100%;border-radius: 50%;margin-right:7px;border:2px solid white;" src="/<%= session[:user]['image'] %>">   
+                                        <% else %>
+                                            <img style="width: 100%;border-radius: 50%;margin-right:7px;border:2px solid white;" src="/image/avat.jpg">   
+                                        <% end %> 
+                                    </div>
+                                    <div class="col-md-10">
+                                        <textarea name="content" id="content" placeholder="Thêm bình luận của bạn..." style="width: 100%;padding:2px 8px;" rows="4" ></textarea>
+                                        <input type="submit" name="send" id="send" value="Gửi bình luận" style="background-color: #8E7037; float: right;border:none" class="btn btn-primary">
+                                    </div>
+                                </div> 
+                            </div>
+                        </form>
+
+                        <div class="article-user-comments">
+                            <div class="user-comments-count">
+                                Bình luận (<%= @comments.length %>)
+                            </div>
+                            <div class="article-user-comments-wrap">
+                                <% @comments.each do |comment| %>
+                                    <% if comment.parent_id.to_i == 0 %>
+                                        <div class="user-comments <%= comment.id %>">
+                                            <div class="user-comments-ava">
+                                                <% user = Account.find(comment.user) %>
+                                                <% if user.image.to_s != '' %>
+                                                    <img src="/<%= user.image %>" class="user-comments-img">
+                                                <% else %>
+                                                    <img src="/image/avat.jpg" class="user-comments-img">
+                                                <% end %>
+                                            </div>
+                                            <div class="user-comments-details">
+                                                <div class="user-comments-head">
+                                                    <div class="user-comment-name">
+                                                        <%= user.name %>
+                                                    </div>
+                                                    <div class="user-comment-time">
+                                                        <%= 
+                                                            distance_of_time_in_words(comment.datecmt, Time.now)
+                                                         %>
+                                                         ago
+                                                    </div>
+                                                </div>
+                                                <div class="user-comment-content">
+                                                    <%== comment.content %>
+                                                </div>
+                                                <div class="user-comment-action">
+                                                    <div class="user-comment-liked <%= comment.id %>" data-id="<%= comment.id %>">
+                                                        <% if @likes.length.to_i == 0 %>
+                                                            <i class="like-icon far fa-thumbs-up"></i>  
+                                                        <% else %>
+                                                            <% likeAccount = Likecomment.where('user = ' + session[:user]['id'].to_s).where('idcmt = ' + comment.id.to_s).first %>
+                                                            <% if likeAccount.present? && (likeAccount.isShow == 1) %>
+                                                                <i class="fas like-icon far fa-thumbs-up"></i>
+                                                            <% else%>
+                                                                <i class="like-icon far fa-thumbs-up"></i>
+                                                            <% end %>
+                                                        <% end %>
+                                                        <span><%= comment.likecmt %></span> 
+                                                    </div>
+                                                    <div class="user-comment-reply" data-id="<%= comment.id %>">
+                                                        <i class="fas fa-reply"></i> Trả lời
+                                                    </div>
+                                                    <div class="user-comment-action-more-block">
+                                                        <% if session[:user] && session[:user]['id'].to_i == comment.user.to_i %>
+                                                            <i class="fas fa-ellipsis-h user-comment-more-icon"
+                                                            data-id="<%= comment.id %>"></i>
+                                                            <div class="user-comment-action-more <%= comment.id %>">
+                                                                <div class="user-comment-edit">
+                                                                    Chỉnh sửa
+                                                                </div>
+                                                                <div class="user-comment-delete" data-id="<%= comment.id %>"
+                                                                    data-parentId="<%= comment.id %>"
+                                                                    data-url="">
+                                                                    Xóa
+                                                                </div>
+                                                            </div>
+                                                        <% else %> 
+                                                            <i class="fas fa-ellipsis-h user-comment-more-icon"
+                                                            data-id="<%= comment.id %>"></i>
+                                                            <div class="user-comment-action-more <%= comment.id %>">
+                                                                <div class="user-comment-edit user-comment-report"  data-id="<%= comment.id %>">
+                                                                    Báo cáo vi phạm
+                                                                </div>
+                                                            </div>
+                                                        <% end %>
+                                                    </div>
+                                                </div>
+                                                <form class="article-your-sub-comments-block <%= comment.id %>" action="" method="POST">
+                                                    <input type="text" name="article_id" value="<%= @post.id %>" hidden>
+                                                    <input type="text" name="parent_id" value="<%= comment.id %>" hidden>
+                                                    <textarea name="content" rows="1" class="article-your-comments-area <%= comment.id %>" placeholder="Viết bình luận của bạn" required></textarea>
+                                                    <div class="text-right">
+                                                        <button class="btn btn-your-comment" type="submit">
+                                                            Gửi bình luận
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                                <div class="user-comments-sub-block <%= comment.id %>">
+                                                <% @comments.each do |sub_comment| %>
+                                                    <% if sub_comment.parent_id.to_i == comment.id.to_i %>
+                                                        <div class="user-comments user-comments-sub <%= sub_comment.id %>">
+                                                            <div class="user-comments-ava">
+                                                                <% user = Account.find(sub_comment.user) %>
+                                                                <% if user.image.to_s != '' %>
+                                                                    <img src="/<%= user.image %>" class="user-comments-img">
+                                                                <% else %>
+                                                                    <img src="/image/avat.jpg" class="user-comments-img">
+                                                                <% end %>
+                                                            </div>
+                                                            <div class="user-comments-details">
+                                                                <div class="user-comments-head">
+                                                                    <div class="user-comment-name">
+                                                                        <%= user.name %>
+                                                                    </div>
+                                                                    <div class="user-comment-time">
+                                                                        <%= distance_of_time_in_words(sub_comment.datecmt, Time.now) %> ago
+                                                                    </div>
+                                                                </div>
+                                                                <div class="user-comment-content">
+                                                                    <%== sub_comment.content %>
+                                                                </div>
+                                                                <div class="user-comment-action">
+                                                                    <div class="user-comment-liked <%= sub_comment.id %>" data-id="<%= sub_comment.id %>">
+                                                                        <% if @likes.length.to_i == 0 %>
+                                                                            <i class="like-icon far fa-thumbs-up"></i>  
+                                                                        <% else %>
+                                                                            <% likeAccount = Likecomment.where('user = ' + session[:user]['id'].to_s).where('idcmt = ' + sub_comment.id.to_s).first %>
+                                                                            <% if likeAccount.present? && (likeAccount.isShow == 1) %>
+                                                                                <i class="fas like-icon far fa-thumbs-up"></i>
+                                                                            <% else%>
+                                                                                <i class="like-icon far fa-thumbs-up"></i>
+                                                                            <% end %>
+                                                                        <% end %>
+                                                                        <span><%= sub_comment.likecmt %></span> 
+                                                                    </div>
+                                                                    <div class="user-comment-reply" data-id="<%= comment.id %>">
+                                                                        <i class="fas fa-reply"></i> Trả lời
+                                                                    </div>
+                                                                    <div class="user-comment-action-more-block">
+                                                                        <% if session[:user] && (session[:user]['id'].to_i == sub_comment.user.to_i) %>
+                                                                            <i class="fas fa-ellipsis-h user-comment-more-icon"
+                                                                            data-id="<%= sub_comment.id %>"></i>
+                                                                            <div class="user-comment-action-more <%= sub_comment.id %>">
+                                                                                <div class="user-comment-edit">
+                                                                                    Chỉnh sửa
+                                                                                </div>
+                                                                                <div class="user-comment-delete" 
+                                                                                data-id="<%= sub_comment.id %>" data-parentId="<%= comment.id %>"
+                                                                                data-url="">
+                                                                                    Xóa
+                                                                                </div>
+                                                                                
+                                                                            </div>
+                                                                        <% else %> 
+                                                                        <i class="fas fa-ellipsis-h user-comment-more-icon"
+                                                                        data-id="<%= sub_comment.id %>"></i>
+                                                                        <div class="user-comment-action-more <%= sub_comment.id %>">
+                                                                            <div class="user-comment-edit user-comment-report" data-id="<%= sub_comment.id %>">
+                                                                                Báo cáo vi phạm
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                        <% end %>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <% end %>
+                                                <% end %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+        	    <div class="col-md-4">
+        			<div style="padding-top: 30px; background: rgba(43, 124, 169, 0.3);border-radius: 5px;padding: 10px;">
+                        <h4><b>PHỔ BIẾN</b></h4>
+                        <% @populars.each do |popular| %>
+                            <div class='row' style='padding-top:30px;'>
+                                <div class='col-md-4'>
+                                    <a href='/blog/<%= popular.id %>' style='text-decoration:none;color:black'><img src='/<%= popular.image %>' style='width:122%;'></a>
+                                </div>
+                                <div class='col-md-8'>
+                                    <a href='/blog/<%= popular.id %>' style='text-decoration:none;color:black'><h6 class='intro-title'><b><%= popular.title %></b></h6></a>
+                                    <p style='color:gray;font-size:13px;'><span class='fas fa-user'></span>
+                                        <% @users.each do |user| %>
+                                            <% if user.id == popular.user %>
+                                                <%= user.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                        <div style="padding-top: 30px; background: rgba(43, 124, 169, 0.3);border-radius: 5px;padding: 10px;margin-top: 60px; ">
+                        <h4><b>GẦN ĐÂY</b></h4>
+                        <% @recents.each do |recent| %>
+                            <div class='row' style='padding-top:30px;'>
+                                <div class='col-md-4'>
+                                    <a href='/blog/<%= recent.id %>' style='text-decoration:none;color:black'><img src='/<%= recent.image %>' style='width:122%;'></a>
+                                </div>
+                                <div class='col-md-8'>
+                                    <a href='/blog/<%= recent.id %>' style='text-decoration:none;color:black'><h6 class='intro-title'><b><%= recent.title %></b></h6></a>
+                                    <p style='color:gray;font-size:13px;'><span class='fas fa-user'></span>
+                                        <% @users.each do |user| %>
+                                            <% if user.id == recent.user %>
+                                                <%= user.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+        		</div>
+        	</div>
+        </div>
+</div>

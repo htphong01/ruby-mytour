@@ -1,0 +1,62 @@
+.properties{
+	padding: 15px;
+	border: 1px solid gray;
+	background-color:  rgba(0,174,239,0.3);
+}
+
+.card_room{
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+
+.ctnf{
+	background-color: #f5f5f5; 
+	padding-top: 50px;
+	padding-bottom: 100px;
+}
+
+.ctn{
+	margin-top: 20px;
+	background-color: white; 
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.image_room{
+	height: 180px;
+	width: 250px;
+}
+
+.strip{
+	padding: 20px;
+	border-right: 1px dashed gray;
+	
+}
+.nameroom{
+	background-color: #e8e8ff;
+	padding: 20px;
+}
+
+.add-link{
+	text-decoration: none;
+	color: white;
+}
+
+.add-link:hover{
+	text-decoration: none;
+	color: white;
+}
+.btn-more{
+	background-color:  #6666ff;
+	color: white;
+	padding: 8px;
+	border-radius: 3px;
+	text-decoration: none;
+}
+
+.btn-more:hover{
+	text-decoration: none;
+	color:white;
+	opacity: 0.7;
+}

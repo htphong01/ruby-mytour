@@ -1,0 +1,208 @@
+body{
+    font-family: verdana;
+    font-size: 15px;
+}
+.pro{
+border:1px solid #bfbfbf;
+margin-bottom: 5px;
+padding:5px;
+width:300px;
+height: 440px;
+border-radius: 5px;
+}
+a{
+color:#1a66cc;
+text-decoration:none;
+font-weight:900;
+}
+#cart{
+border:1px solid #999999;
+margin:5px;
+padding:5px;
+width:400px;
+text-align:center;
+}
+button a,button a:hover{
+   text-decoration: none;
+}
+.bttn{
+   border-radius: 3px;
+   border:1px solid #DB7093;
+   height: 45px;
+   color:black;
+   background-color: white;
+   padding: 12px;
+   margin: 3px;
+   text-align: center;
+}
+.actives{
+   background-color: #DB7093;
+   color:white;
+   border-radius: 3px;
+   border:1px solid #DB7093;
+}
+a .bttn :hover{
+   text-decoration: none;
+}
+.imgpro{
+   height: 270px;
+   float: center;
+}
+.buy{
+ background-color: white;
+ height: 40px;
+ text-align: center;
+ border:1px solid #DC143C;
+ font-size: 16px;
+ border-radius: 20px;
+}/*Khi di chuột đến nút thêm vào giỏ*/
+.buy:hover{
+ background-color: #DC143C;
+ height: 40px;
+ text-align: center;
+ border:none;
+ color: white;
+ font-size: 16px;
+ border-radius: 20px;
+}
+.buy a:hover{
+   color:white;
+}
+.searchbook{
+   height: 40px; width: 400px;
+   border-radius: 5px;
+   border: none;
+   background-color: rgb(234, 236, 236);
+}
+.butsearch{
+   border: none;
+   background-color: black;
+   color:white;
+   height: 40px;
+   border-radius: 5px;
+}
+/*Chân trang web*/
+footer p,footer h3 {
+   padding-bottom: 12px;
+}
+footer{
+   background-image: linear-gradient(#776776,#776776);
+   color: white;
+   margin-top: 0px;
+   padding-bottom: 20px;
+   padding-top: 30px;
+} 
+td{
+   padding: 5px;
+}
+.procart{
+   border: 1px solid #bfbfbf;
+   padding: 20px;
+   margin-bottom: 20px;
+   border-radius: 3px;
+   background-color: white;
+}
+.propay{
+   border: 1px solid #bfbfbf;
+   padding:10px;
+   margin: 7px;
+   border-radius: 3px;
+   background-color: white;
+}
+.imgcart{
+   height: 100px;
+}
+/*Nút cập nhật giỏ hàng và thanh toán*/
+.btnupdate{
+   background-color: #9ACD32;
+   color: white;
+   padding: 5px;
+   margin-right: 20px;
+   border: none;
+}
+.btntt{
+   background-color: red;
+   color:white;
+   padding: 5px;
+   border:none;
+}
+.vertical-menu a {
+     background-color: white;
+     color: black;
+     display: block;
+     padding-top:15px;
+     padding-bottom:15px;
+     text-decoration: none;
+}
+.vertical-menu a:hover {
+     background-color: #ccc;
+}
+
+.vertical-menu a.active {
+   background-color: #4CAF50;
+   color: white;
+}
+.avatacc{
+   width: 200px;
+   height: 200px;
+   border-radius: 50%;
+}
+.Email{
+   width: 400px;
+   height: 40px;
+   border-radius: 10px;
+   border:1px solid gray;
+ }
+ /*Nút đăng ký email theo dõi*/
+ .dkEmail{
+   background-color: black;
+   color:white;
+   width: 400px;
+   height: 40px;
+   border-radius: 10px;
+   border: none;
+ }
+/*Menu admin quản lý*/
+.sidenav {
+   height: 100%;
+   width: 17%;
+   position: fixed;
+   z-index: 1;
+   top: 0;
+   left: 0;
+   background-color: #111;
+   overflow-x: hidden;
+   padding-top: 20px;
+ }
+ 
+ .sidenav a {
+   padding: 20px 8px 6px 30px;
+   text-decoration: none;
+   font-size: 18px;
+   color: #818181;
+   display: block;
+ }
+ 
+ .sidenav a:hover {
+   color: #f1f1f1;
+ }
+ 
+ .main {
+   margin-left: 160px; /* Same as the width of the sidenav */
+   font-size: 28px; /* Increased text to enable scrolling */
+   padding: 0px 10px;
+ }
+ 
+ @media screen and (max-height: 450px) {
+   .sidenav {padding-top: 15px;}
+   .sidenav a {font-size: 15px;}
+ }
+
+ /* Blog */
+
+ .intro-blog {
+     overflow: hidden;
+     display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 4;
+ }  

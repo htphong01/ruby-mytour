@@ -1,0 +1,58 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">QUẢN TRỊ VIÊN:</h1>
+                    <h3 class="mb-4">
+                        <!-- link to hotel -->
+                        <a target="_blank" href="/hotels?id=<%= session[:user]['id'] %>">
+                            <%= @hotel.name %>
+                        </a>
+                    </h3>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr style="text-align: center;">
+                                            <th>STT</th>
+                                            <th>Tên phòng</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Giá</th>
+                                            <th>Số lượng</th>
+                                            <th>Sửa</th>
+                                            <th>Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% @rooms.each_with_index do |room, index| %>
+                                            <tr>
+                                                  <td style='text-align: center;'><%= index+1 %></td>
+                                                  <td><%= room.nameroom %></td>
+                                                  <td style='text-align: center;'><img src='/<%= room.image %>' width='150px' height='85px'></td>
+                                                  <td style='text-align: center;'><%= room.final_price %></td>
+                                                  <td style='text-align: center;'><%= room.amount %></td>
+                                                  <td style='text-align: center;'><a class='btn btn-primary'><i class='fas fa-edit'></i></a></td>
+                                                  <td style='text-align: center;'><a href='../Model/deleteroom.php?id=$room[id]' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>
+                                            </tr>
+                                        <% end %>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="pagination" style="float: center;margin-left: 40%;">
+                                <%= will_paginate @rooms %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

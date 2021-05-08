@@ -1,0 +1,36 @@
+        <div class="row">
+            <h3>Thêm danh mục mới</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-danger">
+                    <%= session[:notification] %>
+                    <% session[:notification] = '' %>
+                </div>
+                <form action="/admin/category/store" method="post" enctype="multipart/form-data">
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <div class="form-group">
+                        <label for="name">Tên danh mục</label>
+                        <input type="text" name="name" id="" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idcategory">Thuộc danh mục</label>
+                        <select name="cate" id="" class="form-control">
+                            <option value="0">-----</option>
+                            <% @categories.each do |cate| %>
+                                <option value="<%= cate.id %>"><%= cate.namecate %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+                    <div class="form-group">
+                        <label for="decs">Mô tả</label>
+                        <textarea name="desc"></textarea>
+                        <script>
+                            CKEDITOR.replace('desc');
+                        </script>
+                    </div>
+                    <input type="submit" class="btn btn-primary" name="submit">
+                </form>
+            </div>
+        </div>

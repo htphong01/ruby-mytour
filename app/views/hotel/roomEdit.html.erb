@@ -1,0 +1,117 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Chỉnh sửa thông tin phòng:</h1>
+                    <h3 class="mb-4">
+                        <!-- link to hotel -->
+                         <a target="_blank" href="/hotels?id=<%= session[:user]['id'] %>">
+                            <%= @hotel.name %>
+                        </a>
+                    </h3>
+                    <hr class="sidebar-divider d-none d-md-block">
+                    <div class="row">
+                        
+                        <div class="col-md-10 col-lg-10">
+                            <div class="text-danger">
+                                <%= session[:notification] %>
+                                <% session[:notification] = '' %>
+                            </div>
+                            <form action="/hotel/room/<%= @room.id %>/update" method="post" enctype="multipart/form-data">
+                                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                                <div class="form-group">
+                                    <label for="name">Tên phòng: </label>
+                                    <input type="text" name="name" id="" class="form-control" value="<%= @room.nameroom %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Hình ảnh: </label>
+                                    <input type="file" name="image" id="" onchange="readURL(this)" class="form-control"><br>
+                                    <img class="image-hotel" src="/<%= @room.image %>" style="height: 300px;padding: 20px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng:</label>
+                                    <input type="number" name="amount" id="" value="<%= @room.amount %>" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Giá gốc: (Đơn vị tính: vnđ)</label>
+                                    <input type="number" name="price" id="" value="<%= @room.price %>"  class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Khuyến mãi: (% được giảm hoặc số tiền giảm)</label>
+                                    <input type="number" name="discount" id="" value="<%= @room.discount %>"  class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Giá sau cùng: (Đơn vị tính: vnđ)</label>
+                                    <input type="number" name="final_price" id="" value="<%= @room.final_price %>"  class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Diện tích phòng:</label>
+                                    <input type="text" name="area" id="" value="<%= @room.area %>"
+                                    class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Hướng phòng:</label>
+                                    <input type="text" name="direction" id="" value="<%= @room.direction %>" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng giường:</label>
+                                    <input type="text" name="beds" id="" value="<%= @room.beds %>"  class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Số lượng người tối đa:</label>
+                                    <input type="number" name="maxium" id="" value="<%= @room.maximun %>"  class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Chính sách hủy:</label>
+                                    <select name="policy" id="" class="form-control">
+                                        <% if @room.policy.to_i == 0 %>
+                                            <option value='0' selected>Không hoàn hủy</option>
+                                            <option value='1' >Hoàn hủy</option>
+                                        <% else %>
+                                            <option value='0' >Không hoàn hủy</option>
+                                            <option value='1' selected>Hoàn hủy</option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Dịch vụ ăn sáng:</label>
+                                    <select name="breakfast" id="" class="form-control">
+                                        <% if @room.breakfast.to_i == 0 %>
+                                            <option value='0' selected>Không kèm bữa sáng</option>
+                                            <option value='1' >Có bữa sáng</option>
+                                        <% else %>
+                                            <option value='0' >Không kèm bữa sáng</option>
+                                            <option value='1' selected>Có bữa sáng</option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Loại phòng:</label>
+                                    <select name="type" id="" class="form-control">
+                                       
+                                       <% if @room.breakfast.to_i == 1 %>
+                                            <option value='1' selected>VIP</option>
+                                            <option value='2' >Thường</option>
+                                        <% else %>
+                                            <option value='1' >VIP</option>
+                                            <option value='2' selected>Thường</option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="desc">Mô tả</label>
+                                    <textarea name="desc"><%= @room.description %></textarea>
+                                    <script>
+                                        CKEDITOR.replace('desc');
+                                    </script>
+                                </div>
+                                <input type="submit" class="btn btn-primary" name="submit" value ="Cập nhật">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

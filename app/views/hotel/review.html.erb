@@ -1,0 +1,62 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Chỉnh sửa thông tin khách sạn:</h1>
+                    <h3 class="mb-4">
+                        <!-- link to hotek -->
+                        <a target="_blank" href="/hotels?id=<%= session[:user]['id'] %>">
+                            <%= @hotel.name %>
+                        </a>
+                        </h3>
+                    <hr class="sidebar-divider d-none d-md-block">
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10">
+                            <form action="/hotel/update" method="post" enctype="multipart/form-data">
+                            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                                <div class="form-group">
+                                    <label for="name">Tên doanh nghiệp: </label>
+                                    <input type="text" name="name" id="" class="form-control" value="<%= @hotel.name %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Hình ảnh: </label>
+                                    <input type="file" name="image" id="" onchange="readURL(this)" class="form-control"><br>
+                                    <img class="image-hotel" src="/<%= @hotel.image %>" style="height: 300px;padding: 20px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Địa chỉ:</label>
+                                    <input type="text" name="address" id="" class="form-control" value="<%= @hotel.address %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Khu vực:</label>
+                                    <select name="idaddress" id="" class="form-control">
+                                        <!-- hotel's current location -->
+                                        <% @areas.each do |area| %>
+                                            <% if area.id == @hotel.id_address%>
+                                                <option value="<%= area.id %>" selected><%= area.name %></option>
+                                        <!-- other locations -->
+                                            <% else %>
+                                                <option value="<%= area.id %>"><%= area.name %></option>
+                                            <% end %>
+                                        <% end %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="decs">Mô tả</label>
+                                    <textarea name="desc"><%= @hotel.description %></textarea>
+                                    <script>
+                                        CKEDITOR.replace('desc');
+                                    </script>
+                                </div>
+                                <input type="submit" class="btn btn-primary" name="submit" value ="Chỉnh sửa">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

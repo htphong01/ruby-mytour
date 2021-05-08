@@ -1,0 +1,53 @@
+<div class="row" style="padding-top: 20px;">
+        <h1 class="text-center">Các doanh nghiệp</h1><br>
+        </div>
+        
+        <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Tên</td>
+                                <td>Hình ảnh</td>
+                                <td>Địa chỉ</td>
+                                <td>Admin chỉ định</td>
+                                <td>Danh mục</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @hotels.each do |hotel| %>
+                                <tr>
+                                    <td><input type="hidden" name="id" value="1"><%= hotel.id %></td>
+                                    <td><%= hotel.name %></td>
+                                    <td><img src="/<%= hotel.image %>" height="85px;" width="140px;"></td>
+                                    <td> <%= hotel.address %></td>
+                                    <td>
+                                        <% if hotel.admin_hotel == 0 %>
+                                               -------
+                                        <%  else %>
+                                            <%= Account.find(hotel.admin_hotel).username %>
+                                        <%   end %>
+                                    </td>
+                                    <td> <%== Category.find(hotel.cate).namecate %> <td>                                        
+                                    <td>
+                                        <a href="/admin/edit/hotel/<%= hotel.id %>" name="modify" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/delete/hotel/<%= hotel.id %>" name="delete" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% end %>
+                        </tbody> 
+                    </table>
+            </div>
+            <div class="pagination" style="float: center;margin-left: 40%;">
+                    <%= will_paginate @hotels %>
+            </div>
+        </div>

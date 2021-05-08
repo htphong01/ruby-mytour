@@ -1,0 +1,49 @@
+<div class="row" style="padding-top: 20px;">
+        <h1 class="text-center">DANH SÁCH CÁC PHÒNG HIỆN ĐANG QUẢNG BÁ</h1><br>
+        </div>
+        <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Tên</td>
+                                <td>Hình ảnh</td>
+                                <td>Số lượng</td>
+                                <td>Thuộc sở hữu</td>
+                                <td>Giá phòng</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form action="/MyTour/MyTour/Admin/rooms.php" method="post">
+                                <% @rooms.each do |room| %>
+                                    <tr>
+                                        <td><input type="hidden" name="id" value="<%= room.id %>"><%= room.id %></td>
+                                        <td><%= room.nameroom %></td>
+                                        <td><img src="/<%= room.image %>" height="85px;" width="140px;"></td>
+                                        <td><%= room.status %></td>
+                                        <td>
+                                            <% @hotels.each do |hotel| %>
+                                                <% if hotel.id == room.hotel %>
+                                                    <%= hotel.name %>
+                                                <% end %>
+                                            <% end %>
+                                        </td>                                        
+                                        <td>733000</td>
+                                        <td>
+                                            <a target="_blank" href="/rooms?id=<%= room.hotel %>" name="modify"><i class='far fa-eye' style="color: black;" ></i></a>
+                                        </td>
+                                        <td><button type="submit" name="delete" class="btn btn-danger" ><i class="fas fa-trash-alt"></i></button></td>
+                                    </tr>
+                                <% end %>
+                            </form>
+                        </tbody>  
+                    </table>
+            </div>
+            <div class="pagination" style="float: center;margin-left: 40%;">
+                <%= will_paginate @rooms %>    
+            </div>
+        </div>

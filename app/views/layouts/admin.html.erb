@@ -1,0 +1,311 @@
+
+<% if !session[:user] || session[:user]['role'].to_i != 1 %>
+    <script type="text/javascript">
+        window.location.href="/"
+    </script>
+<% end %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Admin</title>
+    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="/Css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/DataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+</head>
+<body id="page-top">
+<!-- Sidebar -->
+        <% if session[:user] %>
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion fixed-top"
+            id="accordionSidebar" style="width: 100vw; /* viewport width */
+                height: 100vh; /* viewport height */
+                overflow-y: scroll;
+                overflow-x: hidden;">
+
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../View/index.php">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-laugh-wink"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">Mytour</div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                        aria-expanded="true" aria-controls="collapsePages">
+                        <span><img style="width: 35px;height: 35px;border-radius: 50%;margin-right:7px;border:2px solid white;"
+                        src="/<%= session[:user]['image'] %>"><%= session[:user]['username'] %></span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Thông tin:</h6>
+                            <a class="collapse-item" href="/admin/profile">Hồ sơ</a>
+                            <a class="collapse-item" href="/admin/changePass">Đổi mật khẩu</a>
+                            <!-- <a class="collapse-item" href="forgot-password.html">Forgot Password</a> -->
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Thoát:</h6>
+                            <a class="collapse-item" href="/logout">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/dashboard">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Trang chủ</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Quản lý
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Danh mục</span>
+                    </a>
+                    <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý:</h6>
+                            <a class="collapse-item" href="/admin/category">Danh sách</a>
+                            <a class="collapse-item" href="/admin/category/new">Thêm mới</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <!-- <hr class="sidebar-divider"> -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-hotel"></i>
+                        <span>Khách sạn</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý:</h6>
+                            <a class="collapse-item" href="/admin/hotel"; ?>Danh sách</a>
+                            <a class="collapse-item" href="/admin/hotel/new">Thêm mới</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-user"></i>
+                        <span>Người dùng</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý:</h6>
+                            <a class="collapse-item" href="/admin/user">Danh sách</a>
+                            <a class="collapse-item" href="/admin/user/new">Thêm mới</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Phòng</span>
+                    </a>
+                    <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý:</h6>
+                            <a class="collapse-item" href="/admin/room">Danh sách</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
+                        aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+                    <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/admin/orders">Danh sách đơn hàng</a>
+                            <!-- <a class="collapse-item" href="forgot-password.html">Forgot Password</a> -->
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Theo trạng thái:</h6>
+                            <a class="collapse-item" href="/admin/order/status/1">Chờ xác nhận</a>
+                            <a class="collapse-item" href="/admin/order/status/2">Đặt thành công</a>
+                            <a class="collapse-item" href="/admin/order/status/3">Đã nhận phòng</a>
+                            <a class="collapse-item" href="/admin/order/status/4">Đã trả phòng</a>
+                            <a class="collapse-item" href="/admin/order/status/5">Yêu cầu hủy đơn</a>
+                            <a class="collapse-item" href="/admin/order/status/6">Đơn đã hủy</a>
+                        </div>
+                    </div>
+                </li>
+
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Chăm sóc Khách hàng
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/contact">
+                        <i class="fas fa-headset"></i>
+                        <span>Tư vấn</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/comment">
+                        <i class="fas fa-comment-alt"></i>
+                        <span>Bình luận</span></a>
+                </li>
+                <hr class="sidebar-divider d-none d-md-block">
+                <!-- Nav Item - Charts -->
+            
+                <div class="sidebar-heading">
+                    Khác
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog/new" target="_blank">
+                        <i class="fas fa-file-signature"></i>
+                        <span>Đăng bài viết</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/posts">
+                        <i class="fas fa-edit"></i>
+                        <span>Kiểm duyệt bài viết</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/chart">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống kê</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+
+            </ul>
+        <% end %>
+        <!-- End of Sidebar -->
+        <div class="container-fuild" style="margin-left: 16%; margin-top: 12px;">
+            <%= yield %>
+        </div>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/datatables-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap">
+    <link rel="stylesheet" type="text/css" href="/Css/style.css">
+    <link rel="stylesheet" type="text/css" href="/Css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/Css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/Css/comment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <nav class="header-navbar hide-on-mobile">
+            <div class="header-with-logo container">
+                <div class="header-logo-contact">
+                    <div class="header-logo-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Phường Hòa Quý, Quận Ngũ Hành Sơn, TP. Đà Nẵng
+                    </div>
+                    <div class="header-logo-item">
+                        <i class="fas fa-phone-alt"></i>
+                        0123456789
+                    </div>
+                </div>
+                <div class="header-logo-wrap">
+                    <a href="/">
+                    <img src="/image/logohome.png" alt="">
+                </a>
+                </div>
+                <div class="header-logo-social">
+                    <div class="header-logo-children">
+                        <a href="#" class="header-logo-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="header-logo-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="header-logo-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="header-logo-link">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                        <a href="#" class="header-logo-link">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <% if session[:user] %>
+                            <a href="/logout" class="header-logo-link">
+                                ĐĂNG XUẤT
+                            </a>
+                            <a href="/profile" class="header-logo-link">
+                                <img style="width: 35px;height: 35px;border-radius: 50%;margin-right:7px;border:2px solid white;" src="/<%= session[:user]['image'] %>">
+                                <%= session[:user]['username'] %>
+                            </a>
+                        <% else %>
+                            <a href="/login" class="header-logo-link">
+                                ĐĂNG NHẬP
+                            </a>
+                            <a href="/register" class="header-logo-link">
+                                ĐĂNG KÝ
+                            </a>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="header-navbar-item-wrap">
+                <ul class="header-navbar-list" style="list-style: none">
+                    <li class="header-navbar-item">
+                        <a href="/" class="header-navbar__link">
+                            TRANG CHỦ
+                        </a>
+                    </li>
+                    <li class="header-navbar-item dropdown">
+                        <a href="javascript:avoid(0)" class="header-navbar__link dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                            KHÁCH SẠN
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="/category?id=0" class="dropdown-item">Tất cả</a>
+                            <ul style="list-style: none; padding-left: 0">
+                                <% @categories.each do |category| %>
+                                    <li>
+                                        <a class="dropdown-item" href='/category?id=<%= category.id  %>'><%= raw(category.namecate)  %> </a>
+                                    </li>
+                                <% end %>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="header-navbar-item">
+                        <a href="/blog" class="header-navbar__link">
+                            CẨM NANG                           
+                        </a>
+                    </li>
+                    <li class="header-navbar-item">
+                        <a href="/contact" class="header-navbar__link">
+                            LIÊN HỆ
+                        </a>
+                    </li>
+                    <li class="header-navbar-item">
+                        <a href="/about-us" class="header-navbar__link">
+                            GIỚI THIỆU
+                        </a>
+                    </li>
+                    <li class="header-navbar-item">
+                        <a href="/cart" class="header-navbar__link">
+                            ĐƠN HÀNG CỦA TÔI
+                        </a>
+                    </li>
+                    <li class="header-navbar-item">
+                        <a href="/profile" class="header-navbar__link">
+                                        TÀI KHOẢN
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="mobile-navbar">
+            <div class="mobile-header">
+                <div class="mobile-left">
+                    <div class="mobile-bar">
+                        <label for="bar-check" class="header__bar-wrap">
+                            <i class="fas fa-bars"></i>
+                        </label>
+                        <input type="checkbox" id="bar-check" hidden class="sidebar-check">
+                        <label for="bar-check" class="sidebar-overlay"></label>
+                        <nav class="sidebar-mobile-tablet ">
+                            <ul class="sidebar-list">
+                                <li class="sidebar-item">
+                                    <span href="#" class="sidebar-link">MYTOUR</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="../View/index.php" class="sidebar-link">TRANG CHỦ</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">KHÁCH SẠN</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">CẨM NANG</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">LIÊN HỆ</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">GIỚI THIỆU</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">ĐƠN HÀNG CỦA TÔI</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                                <li class="sidebar-item format">
+                                    <a href="#" class="sidebar-link">TÀI KHOẢN</a>
+                                    <i class="fas fa-chevron-right right-icon"></i>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="mobile-logo">
+                        <img src="/image/logo.png" alt="" class="mobile-logo-img">
+                    </div>
+                </div>
+                <div class="header__search">
+                    <div class="header__icon-wrap">
+                        <label for="check-search" class="search-icon-wrap">
+                            <i class="fas fa-search header__icon header__icon-search"></i>
+                        </label>
+                        <input type="checkbox" id="check-search" hidden class="check-to-open-search">
+                        <label for="check-search" class="overlay-search"></label>
+                        <div class="mobile-search">
+                            <form>
+                                <div class="form-group">
+                                    <div class="mobile-search-title">Tìm kiếm nhanh</div>
+                                </div>
+                              <div class="form-group">
+                                <label>Ngày đến:</label>
+                                <input type="date" name="checkin" id="check_in_date_5fe2a8777a803" 
+                                class="hb_input_date_check hasDatepicker form-control" value="08/05/2021" style="font-size: 16px;">
+                              <div class="form-group mt-3" >
+                                <label>Ngày đi: </label>
+                                <input type="date" name="checkout" id="check_out_date_5fe2a8777a803" 
+                                class="hb_input_date_check hasDatepicker form-control" value="08/05/2021" style="font-size: 16px;">
+                              </div>
+                              <div class="form-group mt-3" >
+                                <label>Khu vực: </label>
+                                <select style="font-size: 16px; height: 30px;" class="form-control">
+                                    <option value="1">Quận Hải Châu</option>
+                                    <option value="1">Quận Hải Châu</option>
+                                    <option value="1">Quận Hải Châu</option>
+                                </select>
+                              </div>
+                              <div class="form-group mt-3" >
+                                <label>Số lượng: </label>
+                                <input type="number" name="" id="" style="font-size: 16px;" placeholder="1 phòng" class="form-control">
+                              </div>
+                              <div class="form-group text-right">
+                                  <button type="submit" class="btn btn-primary" style="font-size: 16px;">Tìm kiếm</button>
+                              </div>
+                            </form>    
+                        </div>
+                    </div>
+                    <div class="mobile-user">
+                        <i class="fas fa-user header__icon header__icon-user "></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <%= yield %>
+    <div class="clearfix"></div>
+	<footer class="container-fuild app-footer" style="bottom: 0;">
+		<div style="background-image: url(../image/footer.jpg); color: white;margin-top: -50px;bottom: 0;">
+		<div class="container-fuild" style="background: rgba(0,0,0,0.8);padding: 50px;">
+		<div class="container">
+			<div class="row">
+			<div class="col-md-4">
+				<h3><b>MyTour.vn</b></h3>
+				<p><i class="fas fa-handshake"></i> Chúng tôi cam kết nỗ lực hết mình nhằm cung cấp dịch vụ và sản phẩm tốt nhất, đúng với những giá trị mà khách hàng mong đợi</p>
+				<p><i class="fas fa-map-marker-alt"></i>Văn phòng: Đường Nam Kỳ Khởi Nghĩa, phường Hòa Quý, quận Ngũ Hành Sơn, TP Đà Nẵng</p>
+				<p><i class="fas fa-phone"></i>Số điện thoại: 0971 411 122</p>
+				<p><i class="far fa-envelope"></i>Email:greenbook.vku@gmail.com</p>
+			</div>
+			<div class="col-md-2">
+				<h3><b>GIỚI THIỆU</b></h3>
+				<p>Uy tín và chuyên nghiệp</p>
+				<p>Cơ Hội Việc Làm</p>
+				<p>Liên kết doanh nghiệp</p>
+			</div>
+			<div class="col-md-3">
+				<h3><b>HƯỚNG DẪN</b></h3>
+				<p>Hướng dẫn đặt phòng</p>
+				<p>Cẩm nang tiện ích</p>
+				<p>Chi tiết thông tin</p>
+				<p>Tra cứu đơn hàng</p>
+				<p>Chính sách đổi trả & bảo hành</p>
+				<p>Quy trình giao nhận và thanh toán</p>
+				<p>Chính sách thành viên</p>
+			</div>
+			<div class="col-md-3">
+				<h3><b>LIÊN HỆ</b></h3>
+				<p>Email: greenbook.vku@gmail.com</p>
+				<p>Website: MyTour.vn</p>
+				<p>Facebook: MyTour</p>
+				<p>Zalo page: MyTour</p>
+				<p>Instagram: My_Tour</p>
+				<p>Hỗ trợ: 090.1800.888</p>
+			</div>
+		</div>
+		</div>
+		<div align="center" style="border-top: solid white;height: 15%;width: 100%;padding-top: 20px;bottom: 0;">
+			<span>Bản quyền © 2020 thuộc về MYTOUR.VN. Tất cả các quyền được bảo lưu. </span>
+			<a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+			<a href="https://www.messenger.com/"><i class="fab fa-facebook-messenger"></i></a>
+			<a href="https://www.facebook.com/"><i class="fab fa-facebook-square"></i></a>
+		</div>
+	</div>
+	</div>
+	</footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/JS/slide.js"></script>
+    <script src="/Js/main.js"></script>
+    <script>
+    
+    $(document).ready(function(){       
+        var urlPath = window.location.pathname;
+        var pathName = urlPath.slice(urlPath.indexOf('View')+5);
+        var urlNavTransparent = ['index.php', 'detailhotel.php', 'detailroom.php'];
+        if(urlNavTransparent.indexOf(pathName) != -1) {
+            $(".header-navbar").addClass('header-navbar-homepage');
+        } else {
+            $(".header-navbar").removeClass('header-navbar-homepage');
+        }
+        var scroll_pos = 0;
+        $(document).scroll(function() {
+            scroll_pos = $(this).scrollTop();
+            if(scroll_pos > 10) {
+                $(".header-navbar").addClass('header-navbar--scroll');
+            } else {
+                $(".header-navbar").removeClass('header-navbar--scroll');
+            }
+        });
+
+        $('.header__bar-wrap').on('click', function() {
+            $('#check-search').prop('checked', false);
+        })
+    });
+    </script>
+    
+</body>
+
+</html>

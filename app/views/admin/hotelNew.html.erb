@@ -1,0 +1,73 @@
+        <div class="row">
+            <h3>Thêm Đối tác</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <form action="/admin/hotel/store"method="post" enctype="multipart/form-data">
+                    <div class="text-danger">
+                        <%= session[:notification] %>
+                        <% session[:notification] = '' %>
+                    </div>
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <div class="form-group">
+                        <label for="name">Tên: </label>
+                        <input type="text" name="name" id="" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Hình ảnh: </label>
+                        <input type="file" name="image" id="" onchange="readURL(this)" class="form-control"><br>
+                        <img class="image-hotel" src="/image/images.jpg" style="height: 200px;padding: 20px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ:</label>
+                        <input type="text" name="address" id="" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Khu vực:</label>
+                        <select name="idaddress" id="" class="form-control">
+                            <% @addresses.each do |address| %>
+                                <option value="<%= address.id %>"> <%== address.name %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idcategory">Thuộc danh mục:</label>
+                        <select name="cate" id="" class="form-control">
+                            <% @categories.each do |category| %>
+                                <option value="<%= category.id %>"><%== category.namecate %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Admin quản lý:</label>
+                        <select name="admin" id="" class="form-control">
+                            <option value="0">--- --- ---</option>
+                            <% @accounts.each do |account| %>
+                                <option value="<%= account.id %>"><%= account.username %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+                    <div class="form-group">
+                        <label for="desc">Mô tả</label>
+                        <textarea name="desc"></textarea>
+                        <script>
+                            CKEDITOR.replace('desc');
+                        </script>
+                    </div>
+                    <input type="submit" class="btn btn-primary" name="submit" value ="Thêm">
+                </form>
+            </div>
+        </div>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.image-hotel').attr('src', e.target.result);
+                }
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>

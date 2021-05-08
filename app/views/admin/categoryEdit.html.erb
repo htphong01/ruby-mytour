@@ -1,0 +1,43 @@
+<div class="row"  style="margin-top: 50px;">
+            <h1 class="text-center">Sửa danh mục</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-danger">
+                    <%= session[:notification] %>
+                    <% session[:notification] = '' %>
+                </div>
+                <form action="/admin/category/update/<%= @category.id %>" method="post">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <div class="form-group">
+                        <label for="name">Tên danh mục</label>
+                        <input type="text" name="name" id="" class="form-control" required value='<%== @category.namecate %>'>
+                    </div>
+                    <div class="form-group">
+                        <label for="idcategory">Thuộc danh mục</label>
+                        <select name="cate" id="" class="form-control">
+                            <% if @category.parent_id.to_i == 0 %>
+                                <option value="0" selected>--- --- ---</option>
+                            <% else %>
+                                <option value="0">--- --- ---</option>
+                            <% end %>
+                                <% @categories.each do |cate| %>
+                                    <% if @category.parent_id.to_i == cate.id.to_i %>
+                                        <option value="<%= cate.id %>" selected><%== cate.namecate %></option>
+                                    <% else %>
+                                        <option value="<%= cate.id %>"><%== cate.namecate %></option>
+                                    <% end %>
+                                <% end %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Mô tả</label>
+                        <textarea name="desc"><%== @category.description %></textarea>
+                        <script>
+                            CKEDITOR.replace('desc');
+                        </script>
+                    </div>
+                    <input type="submit" class="btn btn-primary" name="submit" value ="Sửa">
+                </form>
+            </div>
+        </div>

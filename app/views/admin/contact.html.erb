@@ -1,0 +1,58 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">DANH SÁCH YÊU CẦU TƯ VẤN:</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách:</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Người dùng</th>
+                                            <th>Tên</th>
+                                            <!-- <th>Email</th> -->
+                                            <th>Nội dung</th>
+                                            <th>Thời gian gửi yêu cầu</th>
+                                            <th>Trả lời</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                            <% index = 1 %>
+                                            <% @contacts.each do |contact| %>
+                                                <tr>
+                                                    <td><%= index %></td>
+                                                    <% index += 1 %>
+                                                    <td><%= Account.find(contact.user).username %></td>
+                                                    <td><%= contact.name %></td>
+                                                    <!-- <td>Email</td> -->
+                                                    <td><%== contact.content %></td>
+                                                    <td><%== contact.date_send.strftime("%H:%M:%S %d-%m-%Y") %></td>
+                                                    <td>
+                                                        <% if contact.reply != '' %>
+                                                            <a class='btn btn-success' href='/admin/contact/<%= contact.id %>'>XEM PHẢN HỒI</a>
+                                                        <% else %>
+                                                            <a class='btn btn-success' href='/admin/contact/<%= contact.id %>'>PHẢN HỒI</a>
+                                                        <% end %>
+                                                    </td>
+                                                </tr>
+                                            <% end %>
+                                      </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination" style="float: center;margin-left: 40%;">
+                                <%= will_paginate @contacts %>    
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

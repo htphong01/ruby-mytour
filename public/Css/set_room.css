@@ -1,0 +1,49 @@
+.card-set{
+	border: 4px solid #CCCCFF;
+	border-radius: 7px;
+	padding: 5px;
+	background-color: white;
+	margin-bottom: 50px;
+}
+.card-room{
+	border: 1px solid #bfbfbf;
+	padding: 10px;
+	border-radius: 3px;
+	margin-left: 10px;
+	background-color: white;
+}
+
+.label-set{
+	margin-left: 2rem;
+}
+
+.chbox-pay {
+    box-sizing: content-box;
+    /*transition: 1s;*/
+    border: 1px solid #00adef;
+    color: #fff;
+    padding: 10px 0px 10px 0px;
+    /*font-weight: 700;*/
+    border-radius: 3px;
+    margin: 3px;
+    width: 100%;
+    background-color: #00adef;
+    }
+.chbox-pay label{
+	margin-left: 5px;
+}
+
+.text-price{
+	text-align: right;
+	color: green;
+}
+
+.amount{
+	border: none;
+	appearance: textfield;
+}
+
+.sumprice{
+	border:none;
+	appearance: textfield;
+}

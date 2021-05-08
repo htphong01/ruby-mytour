@@ -1,0 +1,71 @@
+<div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="margin-top: 30px;">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">DANH SÁCH ĐƠN HÀNG:</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách:</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th>STT</th>
+                                          <th>Thông tin cá nhân</th>
+                                          <th>Tên phòng</th>
+                                          <th>Số lượng</th>
+                                          <th>Tổng tiền</th>
+                                          <th>Phương thức thanh toán</th>
+                                          <th>Chưa thanh toán</th>
+                                          <th>Nhận phòng</th>
+                                          <th>Trả phòng</th>
+                                          <th>Trạng thái</th>  
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% index = 1 %>
+                                        <% @bills.each do |bill| %>
+                                            <tr>
+                                                <td><%= index %></td>
+                                                <% index += 1 %>
+                                                <td><%= bill.name %><br>
+                                                    <%= bill.email %><br>
+                                                    <%= bill.phone %><br>
+                                                    <%= bill.address %>
+                                                </td>
+                                                <td><%= Room.find(bill.room).nameroom  %></td>
+                                                <td><%= bill.amount %></td>
+                                                <td><%= bill.sum_price %></td>
+                                                <td><%= bill.pay %></td>
+                                                <td>
+                                                    <% if bill.status == 1 || bill.status == 2 || bill.status == 5 %>
+                                                        <%= bill.sum_price - bill.sum_price*30/100 %>
+                                                    <% else %>
+                                                        <% if bill.status == 6 %>
+                                                            Đã hủy đơn
+                                                        <% else %>
+                                                            Đã thanh toán hết
+                                                        <% end %>
+                                                    <% end %>
+                                                </td>
+                                                <td style="width: 7%"><%= bill.checkin_date.strftime("%H:%M %d-%m-%Y") %></td>
+                                                <td style="width: 7%"><%= bill.checkout_date.strftime("%H:%M %d-%m-%Y") %></td>
+                                                <td><%= Status.find(bill.status).name %></td>
+                                            </tr>
+                                        <% end %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination" style="float: center;margin-left: 40%;">
+                                <%= will_paginate @bills %>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>

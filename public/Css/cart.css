@@ -1,0 +1,45 @@
+.card_cart{
+	border: 4px dashed #CCCCFF;
+	border-radius: 7px;
+	padding: 10px;
+	margin:20px;
+	background-color: white;
+}
+.text-cart{
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.img_cart{
+	width: 100%;
+	text-align: center;
+}
+.procart{
+	border: 1px solid #bfbfbf;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 3px;
+	background-color: white;
+	text-align: right;
+}
+
+.update{
+	background-color: #33cc33;
+	color: white;
+	padding: 10px;
+	margin-right: 10px;
+	border: none;
+}
+.set{
+	text-decoration:none;
+	background-color: red;
+	color:white;
+	padding: 10px;
+	border:none;
+}
+a{
+color:#666666;
+text-decoration:none;
+font-weight:900;
+}
