@@ -30,6 +30,7 @@ class HotelController < ApplicationController
     end
 
     def roomNew
+        @hotel = Hotel.where('admin_hotel = ' + session[:user]['id'].to_s).first
         render 'hotel/roomNew'
     end
 
