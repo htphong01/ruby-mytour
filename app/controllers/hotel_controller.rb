@@ -145,4 +145,8 @@ class HotelController < ApplicationController
         bill.save
         redirect_to('/hotel/order')
     end
+
+    def chart
+        @hotel = Hotel.where('admin_hotel = ' + session[:user]['id'].to_s).first
+    end
 end

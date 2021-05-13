@@ -19,14 +19,6 @@ class AdminController < ApplicationController
     end
 
     def dashboard
-        @results = Bill.find_by_sql("SELECT set_date, count(id) as soluong FROM bills GROUP BY set_date ORDER BY set_date desc LIMIT 7")
-        @dates = []
-        @amounts = []
-        @results.each do |record|
-            @dates << record.set_date.strftime("%B %d %Y")
-            @amounts << record.soluong
-        end
-
         render 'admin/dashboard'
     end
 
@@ -82,6 +74,14 @@ class AdminController < ApplicationController
 
     def hotelUpdate
         hotel = Hotel.find(params[:id])
+        user = Account.find(hotel.admin_hotel)
+        user.role = 2
+        user.save
+
+        user1 = Account.find(params[:admin])
+        user1.role = 3
+        user1.save
+
         hotel.name = params[:name]
         hotel.address = params[:address]
         hotel.id_address = params[:idaddress]

@@ -228,7 +228,7 @@ input:checked + .slider:before {
                         <i class="fas fa-check-circle"></i>
                         <span>Xác nhận đơn hàng</span>
                         <span class='tb' >
-                            <%= Bill.where('hotel = ' + @hotel.id.to_s).where('status = 1 or status = 5').all.length %>
+                            <%= Bill.where('hotel = ' + session[:user]['id'].to_s).where('status = 1 or status = 5').all.length %>
                         </span>
                     </a>
                 </li>

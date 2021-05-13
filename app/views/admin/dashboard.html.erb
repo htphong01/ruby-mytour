@@ -9,7 +9,7 @@
                             <h1><%= Category.all.size %></h1><br>Danh mục
                         </div>
                         <div class="card-footer text-center" style="color:white;background-color: #00bddb;">
-                            <a href="category.php" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/admin/category" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                             <h1><%= Hotel.all.size %></h1><br>Khách sạn
                         </div>
                         <div class="card-footer text-center" style="color:white;background-color:#219621;">
-                            <a href="hotels.php" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/admin/hotel" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                              <h1><%= Account.all.size %></h1><br>Tài khoản
                         </div>
                         <div class="card-footer text-center" style="color:white;background-color: #ffad29;">
-                            <a href="user.php" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/admin/user" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -39,39 +39,66 @@
                              <h1><%= Room.all.size %></h1><br>Phòng
                         </div>
                         <div class="card-footer text-center" style="color:white;background-color: #d90000;">
-                            <a href="rooms.php" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/admin/room" style="color:white;">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-
+            <div class="row mt-4">
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Số đơn hàng trong 7 ngày gần nhất</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="myChart" style="width: 100%; height: 100%"></canvas>
+                                        <% 
+                                            @results = Bill.find_by_sql("SELECT set_date, count(id) as soluong FROM bills GROUP BY (set_date) ORDER BY set_date desc LIMIT 7")
+                                            @amounts = []
+                                            @results.each do |record|
+                                                @amounts << record.soluong
+                                            end
+                                        
+                                        %>
+                                        <script>
+                                            var ctx = document.getElementById('myChart').getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: [<%
+                                                        @results.each do |record| %>
+                                                           '<%= record.set_date.strftime("%d-%m-%Y") %>',<% end %>],
+                                                    datasets: [{
+                                                        label: '#Đơn hàng',
+                                                        data: <%== @amounts %>,
+                                                        backgroundColor: 
+                                                            'rgb(0,185,242)',
+                                                        borderColor: 'rgb(0,185,242)',
+                                                        borderWidth: 3
+                                                    }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -83,46 +110,60 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Doanh thu</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
+                                        <canvas id="myPieChart" style="width: 100%; height: 100%;"></canvas>
+                                        <% 
+                                            @results = Bill.find_by_sql("SELECT set_date, sum(sum_price) as price FROM bills GROUP BY (set_date) ORDER BY set_date desc LIMIT 7")
+                                            @prices = []
+                                            @results.each do |record|
+                                                @prices << record.price
+                                            end
+                                        
+                                        %>
+                                        <script>
+                                            var ctx = document.getElementById('myPieChart').getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'line',
+                                                data: {
+                                                    labels: [<%
+                                                        @results.each do |record| %>
+                                                           '<%= record.set_date.strftime("%d-%m-%Y") %>',<% end %>],
+                                                    datasets: [{
+                                                        label: '#Đơn hàng',
+                                                        data: <%== @prices %>,
+                                                        backgroundColor: 
+                                                            'rgb(255,255,255,0)',
+                                                        borderColor: 'rgb(0,185,242)',
+                                                        borderWidth: 3
+                                                    }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+            </div>
         </div>
-    <div class="container" style="margin-top:40px;">
-        
-        </script>
-    </div>
 </body>
 </html>

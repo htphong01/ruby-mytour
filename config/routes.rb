@@ -93,5 +93,7 @@ Rails.application.routes.draw do
   get '/hotel/order/update/:status', to: 'hotel#orderUpdate'
   post '/hotel/order/updateStatus/:id', to: 'hotel#orderUpdateStatus'
 
+  get 'hotel/chart', to: 'hotel#chart'
+
   
 end
